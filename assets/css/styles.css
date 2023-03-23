@@ -122,6 +122,7 @@ img {
   left: 0;
   z-index: var(--z-fixed);
   background-color: var(--first-color);
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
 }
 
 /*===== NAV =====*/
