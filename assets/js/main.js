@@ -1,3 +1,16 @@
+/*===== key contorls=====*/ 
+document.addEventListener("keydown", (e) => {
+    if (e.ctrlKey || e.keyCode==123) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
+});
+
+document.addEventListener("contextmenu", (e) => {
+ e.preventDefault();
+}, false);
+
+
 /*===== MENU SHOW =====*/ 
 const showMenu = (toggleId, navId) =>{
     const toggle = document.getElementById(toggleId),
@@ -107,12 +120,11 @@ sr.reveal('.contact__button', {delay: 600})
 
 // typing text animation script
 var typed = new Typed(".typing", {
-    strings: ["Student", "Enthusiastic Programmer", "Freelancer", "Graphics Designer", "UI/UX Designer", "Full Stack Web Developer", "Software Developer", "Ethical Hacker",  ],
+    strings: ["Student", "Enthusiastic Programmer", "Freelancer", "Graphics Designer", "UI/UX Designer", "Full Stack Web Developer", "Ethical Hacker" ],
     typeSpeed: 100,
     backSpeed: 60,
     loop: true
 });
-// suggestion: ["Full Stack Web Developer", " UI/UX Designer",  " Graphics Designer", "Freelancer"] 
 
 // about button toggle function
 
@@ -131,7 +143,63 @@ function toggle__about__Btn() {
       moreText.style.display = "inline";
     }
   }
+ 
+// contact form save to googel sheets
+function removeIcon() {
+    nameError.innerHTML = '';
+    phoneError.innerHTML = '';
+    emailError.innerHTML = '';
+    messageError.innerHTML = '';
+}
+function onSucessResponse(Response) {
+    document.getElementById("contact_form").reset();
+    removeIcon();
 
+    submitError.classList.remove("submit-fail");
+    submitError.classList.add("submit-success");
+    submitError.style.display = 'block';
+    submitError.innerHTML = ('Successfully Sent !');
+    setTimeout(function(){
+        submitError.style.display = 'none'
+    }, 4000);
+};
+
+function onFailedResponse(error) {
+    // document.getElementById("contact_form").reset();
+    removeIcon();
+
+    submitError.classList.add("submit-fail");
+    submitError.classList.remove("submit-success");
+    submitError.style.bottom = '0';
+    submitError.style.display = 'block';
+    submitError.innerHTML = ('Unable to send details.\n Please try again!');
+    console.error('Error!', error.message);
+    setTimeout(function(){
+        submitError.style.display = 'none'
+    }, 5000);
+};
+
+function sendmessage() {
+    var _0x837e=["\x68\x74\x74\x70\x73\x3A\x2F\x2F\x73\x63\x72\x69\x70\x74\x2E\x67\x6F\x6F\x67\x6C\x65\x2E\x63\x6F\x6D\x2F\x6D\x61\x63\x72\x6F\x73\x2F\x73\x2F\x41\x4B\x66\x79\x63\x62\x7A\x53\x65\x67\x49\x73\x33\x36\x70\x57\x30\x64\x57\x6E\x45\x54\x75\x30\x71\x52\x4A\x5A\x77\x35\x39\x56\x6C\x6A\x52\x53\x35\x67\x41\x61\x55\x58\x57\x67\x48\x5F\x6F\x79\x71\x70\x4E\x62\x65\x61\x6D\x32\x30\x63\x73\x7A\x36\x79\x39\x4B\x34\x65\x62\x64\x6C\x42\x67\x71\x75\x67\x2F\x65\x78\x65\x63"];const scriptURL=_0x837e[0]
+
+    var _0xa09a=["\x63\x6F\x6E\x74\x61\x63\x74\x5F\x5F\x64\x65\x74\x61\x69\x6C\x73","\x66\x6F\x72\x6D\x73"];const form=document[_0xa09a[1]][_0xa09a[0]]
+    
+    
+    // form.addEventListener('submit', e => {
+    //   e.preventDefault()
+    //   fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+    //     .then(Response => console.log("Form Submitted Successfully! We Will Contact You Soon..."))
+    //     .catch(error => console.log('Error!', error.message));
+    // })
+    
+    form.addEventListener('submit', e => {
+        e.preventDefault()
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+          .then(Response => onSucessResponse(Response))
+          .catch(error => onFailedResponse(error));
+      })
+}
+ 
 // contact form validation
 
 var nameError = document.getElementById('name-error');
@@ -161,6 +229,7 @@ function validateName(){
 
 function validatePhone(){
     var phone = document.getElementById('Phone').value;
+
     var valueLength = 11;
 
     if(phone.length == 0){
@@ -241,6 +310,7 @@ function validateEmail(){
 
 function validateMessage(){
     var message = document.getElementById('contact__message').value;
+
     var required = 30;
     var left = required - message.length;
 
@@ -261,11 +331,11 @@ function validateMessage(){
 }
 
 function validateForm(){
-
     var name = document.getElementById('Name').value;
     var phone = document.getElementById('Phone').value;
     var email = document.getElementById('Email').value;
     var message = document.getElementById('contact__message').value;
+
     let formVale = (name+phone+email+message);
 
     if(formVale.length == 0){
@@ -295,45 +365,12 @@ function validateForm(){
         }, 4000);
         return false;
     }
-    if(validateName() || validatePhone() || validateEmail() ||  validateMessage()){
-        submitError.classList.remove("submit-fail");
-        submitError.classList.add("submit-success");
-        submitError.style.display = 'block';
-        submitError.innerHTML = 'Successfully Sent !';
-        setTimeout(function(){
-            submitError.style.display = 'none'
-        }, 4000);
+    if(validateName() || validatePhone() || validateEmail() ||  validateMessage()){        
+        sendmessage()
         return true;
     }
 }
 
-function clearInputdata() {
-    document.getElementById("contact_form").reset();
-        nameError.innerHTML = '';
-        phoneError.innerHTML = '';
-        emailError.innerHTML = '';
-        messageError.innerHTML = '';
-        return false;
-};
-
-// // contact form save to googel sheets
-const scriptURL = 'https://script.google.com/macros/s/AKfycbzSegIs36pW0dWnETu0qRJZw59VljRS5gAaUXWgH_oyqpNbeam20csz6y9K4ebdlBgqug/exec'
-
-const form = document.forms['google-sheet']
-
-// form.addEventListener('submit', e => {
-//   e.preventDefault()
-//   fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-//     .then(Response => console.log("Form Submitted Successfully! We Will Contact You Soon..."))
-//     .catch(error => console.log('Error!', error.message));
-// })
-
-form.addEventListener('submit', e => {
-    e.preventDefault()
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      .then(Response => clearInputdata())
-      .catch(error => alert('Error!', error.message));
-  })
 
 //changing the inner html of the span with "footer_year" id to the given year(2022)
 
