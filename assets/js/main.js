@@ -144,75 +144,6 @@ function toggle__about__Btn() {
     }
   }
  
-// contact form save to googel sheets
-const submitBtn = document.querySelector('#submitBtn');
-
-function removeIcon() {
-    nameError.innerHTML = '';
-    phoneError.innerHTML = '';
-    emailError.innerHTML = '';
-    messageError.innerHTML = '';
-}
-
-function wating() {
-    submitError.classList.remove("submit-fail");
-    submitError.classList.add("submit-success");
-    submitError.style.display = 'block';
-    submitError.innerHTML = ('Sending...!');
-    setTimeout(function(){
-        submitError.style.display = 'none'
-    }, 3800);
-};
-
-function onSucessResponse(response) {
-    document.getElementById("contact_form").reset();
-    removeIcon();
-    
-    submitError.classList.remove("submit-fail");
-    submitError.classList.add("submit-success");
-    submitError.style.display = 'block';
-    submitError.innerHTML = ('Successfully Sent !');
-    setTimeout(function(){
-        submitError.style.display = 'none'
-    }, 4000);
-};
-
-function onFailedResponse(error) {
-    removeIcon();
-    
-    submitError.classList.add("submit-fail");
-    submitError.classList.remove("submit-success");
-    submitError.style.bottom = '0';
-    submitError.style.display = 'block';
-    submitError.innerHTML = ('Unable to send details.<br> Please try again!');
-    console.error('Error!', error.message);
-    setTimeout(function(){
-        submitError.style.display = 'none'
-    }, 5000);
-};
-
-function sendmessage() {
-    var _0x837e=["\x68\x74\x74\x70\x73\x3A\x2F\x2F\x73\x63\x72\x69\x70\x74\x2E\x67\x6F\x6F\x67\x6C\x65\x2E\x63\x6F\x6D\x2F\x6D\x61\x63\x72\x6F\x73\x2F\x73\x2F\x41\x4B\x66\x79\x63\x62\x7A\x53\x65\x67\x49\x73\x33\x36\x70\x57\x30\x64\x57\x6E\x45\x54\x75\x30\x71\x52\x4A\x5A\x77\x35\x39\x56\x6C\x6A\x52\x53\x35\x67\x41\x61\x55\x58\x57\x67\x48\x5F\x6F\x79\x71\x70\x4E\x62\x65\x61\x6D\x32\x30\x63\x73\x7A\x36\x79\x39\x4B\x34\x65\x62\x64\x6C\x42\x67\x71\x75\x67\x2F\x65\x78\x65\x63"];const scriptURL=_0x837e[0]
-
-    var _0xa09a=["\x63\x6F\x6E\x74\x61\x63\x74\x5F\x5F\x64\x65\x74\x61\x69\x6C\x73","\x66\x6F\x72\x6D\x73"];const form=document[_0xa09a[1]][_0xa09a[0]]
-    
-    
-    // form.addEventListener('submit', e => {
-    //   e.preventDefault()
-    //   fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-    //     .then(Response => console.log("Form Submitted Successfully! We Will Contact You Soon..."))
-    //     .catch(error => console.log('Error!', error.message));
-    // })
-    
-    form.addEventListener('submit', e => {
-        wating();
-        e.preventDefault()
-        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-          .then(Response => onSucessResponse(Response))
-          .catch(error => onFailedResponse(error));
-      })
-}
- 
 // contact form validation
 
 var nameError = document.getElementById('name-error');
@@ -357,7 +288,7 @@ function validateForm(){
         submitError.innerHTML = 'Please Fill Details To Submit !';
         setTimeout(function(){
             submitError.style.display = 'none'
-        }, 4000);
+        }, 3000);
         return false;
     }
     if((name.length <1) || (phone.length <1) || (email.length <1) || (message.length <1)){
@@ -366,7 +297,7 @@ function validateForm(){
         submitError.innerHTML = 'Please Fill All Details !';
         setTimeout(function(){
             submitError.style.display = 'none'
-        }, 4000);
+        }, 3000);
         return false;
     }
     if(!validateName() || !validatePhone() || !validateEmail() || !validateMessage()){
@@ -375,15 +306,71 @@ function validateForm(){
         submitError.innerHTML = 'Please Enter Valid Details !';
         setTimeout(function(){
             submitError.style.display = 'none'
-        }, 4000);
+        }, 3000);
         return false;
     }
-    if(validateName() || validatePhone() || validateEmail() ||  validateMessage()){        
-        sendmessage()
+    if(validateName() || validatePhone() || validateEmail() ||  validateMessage()){
         return true;
     }
 }
 
+// contact form save to googel sheets
+const submitBtn = document.querySelector('#submitBtn');
+
+function removeIcon() {
+    nameError.innerHTML = '';
+    phoneError.innerHTML = '';
+    emailError.innerHTML = '';
+    messageError.innerHTML = '';
+}
+
+function wating() {
+    submitBtn.disabled = true;
+    submitError.classList.remove("submit-fail");
+    submitError.classList.add("submit-success");
+    submitError.style.display = 'block';
+    submitError.innerHTML = ('Sending...!');
+};
+
+function onSucessResponse(response) {
+    document.getElementById("contact_form").reset();
+    removeIcon();
+    
+    submitError.classList.remove("submit-fail");
+    submitError.classList.add("submit-success");
+    submitError.style.display = 'block';
+    submitError.innerHTML = ('Successfully Sent !');
+    setTimeout(function(){
+        submitError.style.display = 'none'
+    }, 4000);
+    submitBtn.disabled = false;
+};
+
+function onFailedResponse(error) {
+    removeIcon();
+    
+    submitError.classList.add("submit-fail");
+    submitError.classList.remove("submit-success");
+    submitError.style.bottom = '0';
+    submitError.style.display = 'block';
+    submitError.innerHTML = ('Unable to send details.<br> Please try again!');
+    setTimeout(function(){
+        submitError.style.display = 'none'
+    }, 5000);
+    submitBtn.disabled = false;
+};
+
+const _0x837e=["\x68\x74\x74\x70\x73\x3A\x2F\x2F\x73\x63\x72\x69\x70\x74\x2E\x67\x6F\x6F\x67\x6C\x65\x2E\x63\x6F\x6D\x2F\x6D\x61\x63\x72\x6F\x73\x2F\x73\x2F\x41\x4B\x66\x79\x63\x62\x7A\x53\x65\x67\x49\x73\x33\x36\x70\x57\x30\x64\x57\x6E\x45\x54\x75\x30\x71\x52\x4A\x5A\x77\x35\x39\x56\x6C\x6A\x52\x53\x35\x67\x41\x61\x55\x58\x57\x67\x48\x5F\x6F\x79\x71\x70\x4E\x62\x65\x61\x6D\x32\x30\x63\x73\x7A\x36\x79\x39\x4B\x34\x65\x62\x64\x6C\x42\x67\x71\x75\x67\x2F\x65\x78\x65\x63"];const scriptURL=_0x837e[0]
+
+const _0xa09a=["\x63\x6F\x6E\x74\x61\x63\x74\x5F\x5F\x64\x65\x74\x61\x69\x6C\x73","\x66\x6F\x72\x6D\x73"];const form=document[_0xa09a[1]][_0xa09a[0]]
+    
+form.addEventListener('submit',async (event) =>{
+    event.preventDefault()
+    wating();
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => onSucessResponse(response))
+        .catch(error => onFailedResponse(error));
+    })
 
 //changing the inner html of the span with "footer_year" id to the given year(2022)
 
