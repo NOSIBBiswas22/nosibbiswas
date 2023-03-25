@@ -367,9 +367,9 @@ const _0xa09a=["\x63\x6F\x6E\x74\x61\x63\x74\x5F\x5F\x64\x65\x74\x61\x69\x6C\x73
 form.addEventListener('submit',async (event) =>{
     event.preventDefault()
     wating();
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => onSucessResponse(response))
-        .catch(error => onFailedResponse(error));
+    await fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => onSucessResponse(response))
+            .catch(error => onFailedResponse(error));
     })
 
 //changing the inner html of the span with "footer_year" id to the given year(2022)
