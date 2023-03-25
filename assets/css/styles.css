@@ -460,7 +460,7 @@ img {
   color: red;
 } 
 .submit-message{
-  z-index: -1;
+  z-index: -1000;
   text-align: center;
   display: block;
   width: 237px;
@@ -481,13 +481,9 @@ img {
     transform: translateX(100%);
     opacity: 0;
   }
-  35% {
-    transform: translateX(55%);
-    opacity: 0.5;
-  }
   50% {
     transform: translateX(-10%);
-    opacity: 1;
+    opacity: 0.6;
   }
   100% {
     transform: translateX(0%);
