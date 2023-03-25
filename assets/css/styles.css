@@ -467,7 +467,29 @@ img {
   margin-bottom: -9px;
   border-radius: 0.5rem;
   font-weight: bold;
+  animation-name: notification;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
+
+@keyframes notification {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(-10%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
 .submit-success{
   background-color: seagreen;
   color: #fafaff;
