@@ -332,6 +332,30 @@ function wating() {
     submitError.innerHTML = ('Sending...!');
 };
 
+function showMessageAndWait(submitError, submitBtn, duration) {
+    submitError.classList.add("submit-fail");
+    submitError.classList.remove("submit-success");
+    submitError.style.bottom = '0';
+    submitBtn.disabled = true;
+  
+    const endTime = Date.now() + duration;
+    
+    // Update the message every second with the remaining time
+    const intervalId = setInterval(function() {
+      const remainingTime = Math.ceil((endTime - Date.now()) / 1000 );
+      submitError.style.display = "block";
+      submitError.innerHTML = ("You can send your next message in " + remainingTime + " seconds");
+      if (remainingTime <= 0) {
+        clearInterval(intervalId);
+        submitError.classList.remove("submit-fail");
+        submitError.style.display = "none";
+        submitError.style.bottom = '12px';
+        submitBtn.disabled = false;
+      }
+    }, 1000);
+  }
+  
+
 function onSucessResponse(response) {
     document.getElementById("contact_form").reset();
     removeIcon();
@@ -340,10 +364,11 @@ function onSucessResponse(response) {
     submitError.classList.add("submit-success");
     submitError.style.display = 'block';
     submitError.innerHTML = ('Successfully Sent !');
-    setTimeout(function(){
+    setTimeout(function() {
+        submitError.innerHTML = ('');
         submitError.style.display = 'none'
+        showMessageAndWait(submitError, submitBtn, 60000); 
     }, 4000);
-    submitBtn.disabled = false;
 };
 
 function onFailedResponse(error) {
@@ -355,9 +380,11 @@ function onFailedResponse(error) {
     submitError.style.display = 'block';
     submitError.innerHTML = ('Unable to send details.<br> Please try again!');
     setTimeout(function(){
+        submitError.innerHTML = ('');
         submitError.style.display = 'none'
-    }, 5000);
-    submitBtn.disabled = false;
+        submitError.style.bottom = '12px';
+        showMessageAndWait(submitError, submitBtn, 60000); 
+    }, 4000);
 };
 
 const _0x837e=["\x68\x74\x74\x70\x73\x3A\x2F\x2F\x73\x63\x72\x69\x70\x74\x2E\x67\x6F\x6F\x67\x6C\x65\x2E\x63\x6F\x6D\x2F\x6D\x61\x63\x72\x6F\x73\x2F\x73\x2F\x41\x4B\x66\x79\x63\x62\x7A\x53\x65\x67\x49\x73\x33\x36\x70\x57\x30\x64\x57\x6E\x45\x54\x75\x30\x71\x52\x4A\x5A\x77\x35\x39\x56\x6C\x6A\x52\x53\x35\x67\x41\x61\x55\x58\x57\x67\x48\x5F\x6F\x79\x71\x70\x4E\x62\x65\x61\x6D\x32\x30\x63\x73\x7A\x36\x79\x39\x4B\x34\x65\x62\x64\x6C\x42\x67\x71\x75\x67\x2F\x65\x78\x65\x63"];const scriptURL=_0x837e[0]
@@ -376,6 +403,12 @@ form.addEventListener('submit',async (event) =>{
 
 function getCurrentYear() {
     return new Date().getFullYear(); // returns the year via local timing
-  }
+}
   
-  document.getElementById("footer_year").innerHTML = getCurrentYear();
+document.getElementById("footer_year").innerHTML = getCurrentYear();
+//changing the inner html of the span with "footer_year" id to the given year(2022)
+
+function getCurrentYear() {
+    return new Date().getFullYear(); // returns the year via local timing
+}
+document.getElementById("footer_year").innerHTML = getCurrentYear();
