@@ -145,16 +145,29 @@ function toggle__about__Btn() {
   }
  
 // contact form save to googel sheets
+const submitBtn = document.querySelector('#submitBtn');
+
 function removeIcon() {
     nameError.innerHTML = '';
     phoneError.innerHTML = '';
     emailError.innerHTML = '';
     messageError.innerHTML = '';
 }
-function onSucessResponse(Response) {
+
+function wating() {
+    submitError.classList.remove("submit-fail");
+    submitError.classList.add("submit-success");
+    submitError.style.display = 'block';
+    submitError.innerHTML = ('Sending...!');
+    setTimeout(function(){
+        submitError.style.display = 'none'
+    }, 3800);
+};
+
+function onSucessResponse(response) {
     document.getElementById("contact_form").reset();
     removeIcon();
-
+    
     submitError.classList.remove("submit-fail");
     submitError.classList.add("submit-success");
     submitError.style.display = 'block';
@@ -165,14 +178,13 @@ function onSucessResponse(Response) {
 };
 
 function onFailedResponse(error) {
-    // document.getElementById("contact_form").reset();
     removeIcon();
-
+    
     submitError.classList.add("submit-fail");
     submitError.classList.remove("submit-success");
     submitError.style.bottom = '0';
     submitError.style.display = 'block';
-    submitError.innerHTML = ('Unable to send details.\n Please try again!');
+    submitError.innerHTML = ('Unable to send details.<br> Please try again!');
     console.error('Error!', error.message);
     setTimeout(function(){
         submitError.style.display = 'none'
@@ -193,6 +205,7 @@ function sendmessage() {
     // })
     
     form.addEventListener('submit', e => {
+        wating();
         e.preventDefault()
         fetch(scriptURL, { method: 'POST', body: new FormData(form)})
           .then(Response => onSucessResponse(Response))
