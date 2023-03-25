@@ -480,7 +480,7 @@ img {
     transform: translateX(100%);
     opacity: 0;
   }
-  25% {
+  35% {
     transform: translateX(55%);
     opacity: 0.5;
   }
