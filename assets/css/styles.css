@@ -460,6 +460,7 @@ img {
   color: red;
 } 
 .submit-message{
+  z-index: -1;
   text-align: center;
   display: block;
   width: 237px;
