@@ -10,6 +10,13 @@ document.addEventListener("contextmenu", (e) => {
  e.preventDefault();
 }, false);
 
+window.onload = function(){
+    //hide the preloader
+    setTimeout(function(){
+        document.querySelector(".preloader").style.display = "none";
+        document.querySelector(".l-main").style.display = "block";
+    }, 2000);
+}
 
 /*===== MENU SHOW =====*/ 
 const showMenu = (toggleId, navId) =>{
@@ -90,9 +97,9 @@ const sr = ScrollReveal({
 })
 
 /*SCROLL HOME*/
-sr.reveal('.home__title', {})
-sr.reveal('.home__scroll', {delay: 200})
-sr.reveal('.home__img', {origin:'right', delay: 400})
+sr.reveal('.home__title', {delay: 2000})
+sr.reveal('.home__scroll', {delay: 500})
+sr.reveal('.home__img', {origin:'right', delay: 1500})
 
 /*SCROLL ABOUT*/
 sr.reveal('.about__img', {delay: 500})
@@ -117,6 +124,8 @@ sr.reveal('.contact__p', {delay: 500})
 sr.reveal('.contact__name', {interval: 100})
 sr.reveal('.contact__input', {delay: 400})
 sr.reveal('.contact__button', {delay: 600})
+sr.reveal('.error_message', {delay: 600})
+
 
 // typing text animation script
 var typed = new Typed(".typing", {
@@ -204,7 +213,7 @@ function validatePhone(){
         return false;
     }
 
-    // // 01704485771
+    // 01704485771
     // if(valueLength=11){
     //     if(((phone.charAt(0)!= 0) || (phone.charAt(1)!=1) || ( (phone.charAt(2)!=1) && (phone.charAt(2)!=3) && (phone.charAt(2)!=4) && (phone.charAt(2)!=5) && (phone.charAt(2)!=6) && (phone.charAt(2)!=7) && (phone.charAt(2)!=8) && (phone.charAt(2)!=9)))){
     //         phoneError.innerHTML = "<i class='bx bxs-x-circle'></i>";
@@ -216,7 +225,7 @@ function validatePhone(){
     //     }
     // }
 
-    // // +8801704485771
+    // +8801704485771
     // if(valueLength=14){
     //     if(((phone.charAt(0)!= '+') || (phone.charAt(1)!=8) || (phone.charAt(2)!=8) || (phone.charAt(3)!=0) || (phone.charAt(4)!=1) ||( (phone.charAt(5)!=1) && (phone.charAt(5)!=3) && (phone.charAt(5)!=4) && (phone.charAt(5)!=5) && (phone.charAt(5)!=6) && (phone.charAt(5)!=7) && (phone.charAt(5)!=8) && (phone.charAt(5)!=9)))){
     //         phoneError.innerHTML = "<i class='bx bxs-x-circle'></i>";
@@ -332,10 +341,9 @@ function wating() {
     submitError.innerHTML = ('Sending...!');
 };
 
-function showMessageAndWait(submitError, submitBtn, duration) {
-    submitError.classList.add("submit-fail");
+function showMessageAndWait(duration) {
+    var message = document.getElementById('contact__message').value;
     submitError.classList.remove("submit-success");
-    submitError.style.bottom = '0';
     submitBtn.disabled = true;
   
     const endTime = Date.now() + duration;
@@ -343,13 +351,15 @@ function showMessageAndWait(submitError, submitBtn, duration) {
     // Update the message every second with the remaining time
     const intervalId = setInterval(function() {
       const remainingTime = Math.ceil((endTime - Date.now()) / 1000 );
-      submitError.style.display = "block";
-      submitError.innerHTML = ("You can send your next message in " + remainingTime + " seconds");
+      messageError.innerHTML = ("You can send your next message in " + remainingTime + " seconds.");
       if (remainingTime <= 0) {
         clearInterval(intervalId);
-        submitError.classList.remove("submit-fail");
-        submitError.style.display = "none";
-        submitError.style.bottom = '12px';
+        if(message.length == 0){
+            messageError.innerHTML = ("");
+        }
+        else{
+            validateMessage();
+        }
         submitBtn.disabled = false;
       }
     }, 1000);
@@ -367,23 +377,21 @@ function onSucessResponse(response) {
     setTimeout(function() {
         submitError.innerHTML = ('');
         submitError.style.display = 'none'
-        showMessageAndWait(submitError, submitBtn, 60000); 
+        showMessageAndWait(10000); 
     }, 4000);
 };
 
 function onFailedResponse(error) {
-    removeIcon();
-    
     submitError.classList.add("submit-fail");
     submitError.classList.remove("submit-success");
     submitError.style.bottom = '0';
     submitError.style.display = 'block';
     submitError.innerHTML = ('Unable to send details.<br> Please try again!');
+    submitBtn.disabled = false;
     setTimeout(function(){
         submitError.innerHTML = ('');
         submitError.style.display = 'none'
         submitError.style.bottom = '12px';
-        showMessageAndWait(submitError, submitBtn, 60000); 
     }, 4000);
 };
 
