@@ -377,7 +377,7 @@ function onSucessResponse(response) {
     setTimeout(function() {
         submitError.innerHTML = ('');
         submitError.style.display = 'none'
-        showMessageAndWait(10000); 
+        showMessageAndWait(60000); 
     }, 4000);
 };
 
