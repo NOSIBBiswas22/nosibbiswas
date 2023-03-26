@@ -468,6 +468,7 @@ img {
   margin-bottom: -9px;
   border-radius: 0.5rem;
   font-weight: bold;
+  transition: transform 0.2s ease-in-out;
   animation-name: notification;
   animation-duration: 1s;
   animation-timing-function: ease-out;
