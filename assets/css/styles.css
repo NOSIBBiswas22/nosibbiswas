@@ -81,7 +81,37 @@ img {
   height: auto;
   display: block;
 }
-
+.preloader{
+  overflow-y: hidden;
+  top: 0;
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background: #5361ff;
+}
+.preloader .dots span{
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  background: #fff;
+  border-radius: 50%;
+  transform: rotate(calc(var(--i) * (360deg / 15))) translateY(35px);
+  animation: animate 1.5s linear infinite;
+  animation-delay: calc(var(--i) * 0.1s);
+  opacity: 0;
+}
+@keyframes animate {
+ 0%{
+   opacity: 1;
+ }
+ 100%{
+   opacity: 0;
+ }
+}
 /*===== CLASS CSS ===== */
 .section {
   padding: 2.5rem 0;
@@ -125,6 +155,10 @@ img {
   box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
 }
 
+/*===== MAIN =====*/
+/* .l-main{
+  display: none;
+} */
 /*===== NAV =====*/
 .nav {
   height: var(--header-height);
@@ -235,7 +269,7 @@ img {
   text-align: center;
   line-height: 45px;
   color: #fff;
-  z-index: 9999;
+  /* z-index: 9999; */
   font-size: 30px;
   border-radius: 6px;
   border-bottom-width: 2px;
@@ -460,9 +494,8 @@ img {
   color: red;
 } 
 .submit-message{
-  z-index: -1000;
+  z-index: -100;
   text-align: center;
-  display: block;
   width: 237px;
   left: 1px;
   margin-bottom: -9px;
@@ -479,7 +512,7 @@ img {
 
 @keyframes notification {
   0% {
-    transform: translateX(100%);
+    transform: translateX(60%);
     opacity: 0;
   }
   50% {
