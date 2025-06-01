@@ -129,7 +129,7 @@ sr.reveal('.error_message', {delay: 600})
 
 // typing text animation script
 var typed = new Typed(".typing", {
-    strings: ["Student", "Enthusiastic Programmer", "Freelancer", "Graphics Designer", "UI/UX Designer", "Full Stack Web Developer", "Ethical Hacker" ],
+    strings: ["Student", "Enthusiastic Programmer", "Freelancer", "Graphics Designer", "UI/UX Designer", "Full Stack Web Developer" ],
     typeSpeed: 100,
     backSpeed: 60,
     loop: true
